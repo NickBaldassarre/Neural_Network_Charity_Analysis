@@ -1,38 +1,25 @@
 # An Analysis of Charities Using a Neural Network
 ## Overview
-### In order to determine the best machine learning model to use when trying to predict credit risk, 6 different models were applied to the data. As credit risk data is inherently imbalanced, models were specifically chosen to address this.
+### Using machine learning and neural networks, I created a binary classifier in order to be able to predict whether applicants will be successful in utilizing their funding from Alphabet Soup.
 ## Results
-### RandomOverSampler
-* Balanced accuracy score of 0.65
-* Average precision of 0.99
-* Average recall of 0.59
-![RandomOverSampler](https://github.com/NickBaldassarre/Credit_Risk_Analysis/blob/71e39cafddc87e1148ac12806955288ed2ffda36/Resources/RandomOverSampler.png)
-### SMOTE
-* Balanced accuracy score of 0.66
-* Average precision of 0.99
-* Average recall of 0.69
-![SMOTE](https://github.com/NickBaldassarre/Credit_Risk_Analysis/blob/71e39cafddc87e1148ac12806955288ed2ffda36/Resources/SMOTE.png)
-### ClusterCentroids
-* Balanced accuracy score of 0.54
-* Average precision of 0.99
-* Average recall of 0.40
-![ClusterCentroids](https://github.com/NickBaldassarre/Credit_Risk_Analysis/blob/71e39cafddc87e1148ac12806955288ed2ffda36/Resources/ClusterCentroids.png)
-### SMOTEEN
-* Balanced accuracy score of 0.64
-* Average precision of 0.99
-* Average recall of 0.57
-![SMOTEEN](https://github.com/NickBaldassarre/Credit_Risk_Analysis/blob/71e39cafddc87e1148ac12806955288ed2ffda36/Resources/SMOTEEN.png)
-### BalancedRandomForestClassifier
-* Balanced accuracy score of 0.79
-* Average precision of 0.99
-* Average recall of 0.87
-![BalancedRandomForestClassifier](https://github.com/NickBaldassarre/Credit_Risk_Analysis/blob/71e39cafddc87e1148ac12806955288ed2ffda36/Resources/BalancedRandomForestClassifier.png)
-### EasyEnsembleClassifier
-* Balanced accuracy score of 0.93
-* Average precision of 0.99
-* Average recall of 0.94
-![EasyEnsembleClassifier](https://github.com/NickBaldassarre/Credit_Risk_Analysis/blob/71e39cafddc87e1148ac12806955288ed2ffda36/Resources/EasyEnsembleClassifier.png)
+### Data Preprocessing
+* Target variable is IS_SUCCESSFUL
+* The features of this model are APPLICATION_TYPE, AFFILIATION, CLASSIFICATION, USE_CASE, ORGANIZATION, STATUS, INCOME_AMT, SPECIAL_CONSIDERATIONS, ASK_AMT
+* The variables that are neither targets or features are EIN and NAME and were removed
+### Compiling, Training and Evaluating the Model
+* 2 hidden layers were selected for this model
+* 80 neurons for the first hidden layer and 30 neurons for the second hidden layer were selected
+* Relu activation function was used for the hidden layers and sigmoid activation function was used for the output layer
+* These were all selected in order to achieve a high degree of accuracy
+![First Model](https://github.com/NickBaldassarre/Neural_Network_Charity_Analysis/blob/e465c8fe9fe94ad84bd53c908e2ab2d61ad8140b/Resources/Model_1st.png)
+![First Model Accuracy](https://github.com/NickBaldassarre/Neural_Network_Charity_Analysis/blob/e465c8fe9fe94ad84bd53c908e2ab2d61ad8140b/Resources/Accuracy_1st.png)
+### Optimization
+* I removed the STATUS variable which only very slightly improved the model
+* I added neurons to both hidden layers, with 100 in the first and 40 in the second, again with only a slight improvement
+* I added 2 additional hidden layers with 20 neurons and 10, again with only a slight improvement
+* I experimented with multiple combinations of activation functions and ended up using a combination of relu and tanh functions in the hidden layers, and kept the sigmoid function for the output layer.
+* I increased the epochs to 40
+![Optimized Model](https://github.com/NickBaldassarre/Neural_Network_Charity_Analysis/blob/e465c8fe9fe94ad84bd53c908e2ab2d61ad8140b/Resources/Model_2nd.png)
+![Optimized Model Accuracy](https://github.com/NickBaldassarre/Neural_Network_Charity_Analysis/blob/e465c8fe9fe94ad84bd53c908e2ab2d61ad8140b/Resources/Accuracy_2nd.png)
 ## Summary
-There are certainly machine learning models that are better suited to analyzing this dataset than others. Undersampling is the least successful in providing the most accurate predictions, with the lowest scores in balanced accuracy and average recall. Oversampling methods fared a little bit better, but not enough to make them viable options. The BalancedRandomForestClassifier saw a significant improvement over undersampling and oversampling methods, with a balanced accuracy score of 0.79 and average recall of 0.87. The EasyEnsembleClassifier however was far and above the best performing model, with a balanced accuracy score of 0.93 and average recall of 0.94. The average F1 score of 0.97 solidifies that this model will be effective in predicting credit risk.
-
-My recommendation is to use the EasyEnsembleClassifier to predict credit risk. 
+After many attemps with different neural network models, I was not able to achieve an accuracy above 75%. I did find it interesting that when I reduced the number of neurons by a factor of 10, the overall accuracy was not very much affected. Adding addtional hidden layers had a negligible impact on accuracy. The sigmoid function did seem to be the most effective output function, while tanh seemed to work best for the hidden layers. I tried removing almost every column one at a time, to little effect. Ultimately, I don't believe that a neural network is the best model for this data. I reccoemend attempting with a supervised machine learning model such as the EasyEnsembleClassifier.
